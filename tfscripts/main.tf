@@ -1,7 +1,7 @@
 resource "aws_instance" "EC2-server"{
   ami = "ami-09040d770ffe2224f"
   instance_type = "t2.micro"
-  key_name = "Ansible_host_key"
+  key_name = "TF_key"
   vpc_security_group_ids= ["sg-084e9b1aea742d17c"]
   connection {
     type     = "ssh"
@@ -21,4 +21,21 @@ resource "aws_instance" "EC2-server"{
    provisioner "local-exec" {
   command = "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/scripts/Banking-playbook.yml "
   } 
+}
+
+# Public key 
+resource "aws_key_pair" "TF_key" {
+  key_name   = "TF_key"
+  public_key = tls_private_key.rsa.public_key_openssh
+}
+
+resource "tls_private_key" "rsa" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+# Private key 
+resource "local_file" "TF-key" { 
+    content  = tls_private_key.rsa.private_key_pem
+    filename = "tfkey"
 }
