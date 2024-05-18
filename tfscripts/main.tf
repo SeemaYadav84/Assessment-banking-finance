@@ -1,4 +1,4 @@
-resource "aws_instance" "EC2-server"{
+resource "aws_instance" "EC2-server" {
   ami = "ami-09040d770ffe2224f"
   instance_type = "t2.micro"
   key_name = "TF_key"
