@@ -42,7 +42,7 @@ pipeline {
     }
     stage('Push the Image') {
        steps {
-          sh 'docker push seemayd/banking-app:5.0'
+          sh 'docker push seemayd/banking-app:1.0'
               }
     }
 	  
