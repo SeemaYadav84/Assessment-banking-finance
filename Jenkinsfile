@@ -45,7 +45,7 @@ pipeline {
           sh 'docker push seemayd/banking-app:1.0'
               }
     }
-    stage('Provision server') {
+    stage('Provision server by terraform') {
        steps {
             dir('tfscripts') {
 	    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'jenkinsIAMuser', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
