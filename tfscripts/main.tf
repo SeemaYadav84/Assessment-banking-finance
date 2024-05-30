@@ -1,12 +1,12 @@
 resource "aws_instance" "EC2-server" {
   ami = "ami-09040d770ffe2224f"
   instance_type = "t2.micro"
-  key_name = "TF_key"
+  key_name = "Terra_key"
   vpc_security_group_ids= ["sg-040e4d07776a9f29f"]
   connection {
     type     = "ssh"
     user     = "ubuntu"
-    private_key = "TF_key"
+    private_key = "Terra_key"
     host     = self.public_ip
   }
   provisioner "remote-exec" {
@@ -24,8 +24,8 @@ resource "aws_instance" "EC2-server" {
 }
 
 # Public key 
-resource "aws_key_pair" "TF_key" {
-  key_name   = "TF_key"
+resource "aws_key_pair" "Terra_key" {
+  key_name   = "Terra_key"
   public_key = tls_private_key.rsa.public_key_openssh
 }
 
@@ -35,7 +35,7 @@ resource "tls_private_key" "rsa" {
 }
 
 # Private key 
-resource "local_file" "TF-key" { 
+resource "local_file" "Terra_key" { 
     content  = tls_private_key.rsa.private_key_pem
     filename = "tfkey"
 }
