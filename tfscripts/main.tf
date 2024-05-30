@@ -1,7 +1,7 @@
 resource "aws_instance" "EC2-server" {
   ami = "ami-09040d770ffe2224f"
   instance_type = "t2.micro"
-  key_name = "Terra_key"
+  key_name = "web1_key"
   vpc_security_group_ids= ["sg-040e4d07776a9f29f"]
   connection {
     type     = "ssh"
@@ -23,19 +23,16 @@ resource "aws_instance" "EC2-server" {
   } 
 }
 
-# Public key 
-resource "aws_key_pair" "Terra_key" {
-  key_name   = "Terra_key"
-  public_key = tls_private_key.rsa.public_key_openssh
+resource "tls_private_key" "web1-key" {
+  algorithm   = "RSA"
 }
 
-resource "tls_private_key" "rsa" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
+resource "aws_key_pair" "app-key" {
+  key_name   = "web1-key"
+  public_key = tls_private_key.web1-key.public_key_openssh
 }
 
-# Private key 
-resource "local_file" "Terra_key" { 
-    content  = tls_private_key.rsa.private_key_pem
-    filename = "tfkey"
+resource "local_file" "web1-key" {
+  content  = tls_private_key.web1-key.private_key_pem
+  filename = "web1-key.pem"
 }
