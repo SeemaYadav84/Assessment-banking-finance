@@ -15,7 +15,7 @@ resource "aws_instance" "EC2-server" {
     host     = self.public_ip
     }
     inline = [
-      command = "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml "
+      "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml"
     ]
   }
   
