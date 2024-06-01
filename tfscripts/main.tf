@@ -3,29 +3,20 @@ resource "aws_instance" "EC2-server" {
   instance_type = "t2.micro"
   key_name = "web1-key"
   vpc_security_group_ids= ["sg-040e4d07776a9f29f"]
-  connection {
-    type     = "ssh"
-    user     = "ubuntu"
-    private_key = tls_private_key.rsa.private_key_pem
-    host     = self.public_ip
+  tags = {
+    Name = "EC2-server"
   }
   
   provisioner "remote-exec" {
-    inline = [ "echo 'wait to start instance' "]
-	
-	connection {
+      connection {
     type     = "ssh"
     user     = "ubuntu"
     private_key = tls_private_key.web1-key.private_key_pem
     host     = self.public_ip
-  }
+    }
     inline = [
       command = "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml "
     ]
-  }
-  
-  tags = {
-    Name = "EC2-server"
   }
   
   provisioner "local-exec" {
