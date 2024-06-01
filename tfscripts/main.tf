@@ -7,20 +7,22 @@ resource "aws_instance" "EC2-server" {
     Name = "EC2-server"
   }
   
-  provisioner "remote-exec" {
-      connection {
+
+  connection {
     type     = "ssh"
     user     = "ubuntu"
     private_key = tls_private_key.web1-key.private_key_pem
     host     = self.public_ip
     }
-    inline = [
-      "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml"
-    ]
-  }
   
   provisioner "local-exec" {
         command = " echo ${aws_instance.EC2-server.public_ip} > inventory "
+  }
+  
+  provisioner "local-exec" {
+    inline = [
+      "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml"
+    ]
   }
 }
 
