@@ -20,9 +20,7 @@ resource "aws_instance" "EC2-server" {
   }
   
   provisioner "local-exec" {
-    inline = [
-      "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml"
-    ]
+    command = "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml"
   }
 }
 
