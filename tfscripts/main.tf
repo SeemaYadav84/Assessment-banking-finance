@@ -1,3 +1,9 @@
+locals {
+  ssh_user         = "ubuntu"
+  key_name         = "devops"
+  private_key_path = "/home/ubuntu/.ssh/id_rsa"
+}
+
 resource "aws_instance" "EC2-server" {
   ami = "ami-09040d770ffe2224f"
   instance_type = "t2.micro"
@@ -23,7 +29,7 @@ resource "aws_instance" "EC2-server" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml "
+    command = "ansible-playbook -i ${aws_instance.EC2-server.public_ip}, --private-key ${local.private_key_path} /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml "
   }
 }
 
