@@ -21,10 +21,6 @@ resource "aws_instance" "EC2-server" {
   provisioner "local-exec" {
         command = " echo ${aws_instance.EC2-server.public_ip} > inventory "
   }
-  
-  provisioner "local-exec" {
-    command = "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml"
-  }
 }
 
 resource "tls_private_key" "web1-key" {
