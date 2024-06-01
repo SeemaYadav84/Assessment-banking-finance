@@ -1,7 +1,7 @@
 resource "aws_instance" "EC2-server" {
   ami = "ami-09040d770ffe2224f"
   instance_type = "t2.micro"
-  key_name = "Terra_key"
+  key_name = "web1-key"
   vpc_security_group_ids= ["sg-040e4d07776a9f29f"]
   connection {
     type     = "ssh"
@@ -11,6 +11,17 @@ resource "aws_instance" "EC2-server" {
   }
   provisioner "remote-exec" {
     inline = [ "echo 'wait to start instance' "]
+  }	
+	provisioner "remote-exec" {
+    connection {
+    type     = "ssh"
+    user     = "ubuntu"
+    private_key = tls_private_key.web1-key.private_key_pem
+    host     = self.public_ip
+  }
+    inline = [
+      command = "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml "
+    ]
   }
   tags = {
     Name = "EC2-server"
@@ -18,24 +29,17 @@ resource "aws_instance" "EC2-server" {
   provisioner "local-exec" {
         command = " echo ${aws_instance.EC2-server.public_ip} > inventory "
   }
-   provisioner "local-exec" {
-  command = "ansible-playbook /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml "
-  } 
-}
 
-resource "tls_private_key" "rsa" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
+resource "tls_private_key" "web1-key" {
+  algorithm   = "RSA"
 }
-
-# Public key 
-resource "aws_key_pair" "Terra_key" {
-  key_name   = "Terra_key"
-  public_key = tls_private_key.rsa.public_key_openssh
+#Public key 
+resource "aws_key_pair" "app-key" {
+  key_name   = "web1-key"
+  public_key = tls_private_key.web1-key.public_key_openssh
 }
-
-# Private key 
-resource "local_file" "Terra_key" { 
-    content  = tls_private_key.rsa.private_key_pem
-    filename = "Terra_key.pem"
+#Private key 
+resource "local_file" "web1-key" {
+  content  = tls_private_key.web1-key.private_key_pem
+  filename = "web1-key.pem"
 }
