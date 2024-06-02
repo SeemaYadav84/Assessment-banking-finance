@@ -19,7 +19,7 @@ resource "aws_instance" "EC2-server" {
     }
 }
   provisioner "local-exec" {
-        command = " echo ${aws_instance.EC2-server.public_ip} > inventory "
+        command = " echo ${aws_instance.EC2-server.private_ip} > inventory "
   }
 
   provisioner "local-exec" {
