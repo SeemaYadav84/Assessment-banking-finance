@@ -10,7 +10,7 @@
     command: sudo apt upgrade -y
 
   - name: Install Docker
-    command: sudo apt install docker.io
+    command: sudo apt-get install docker.io -y
     
   - name: Add user to Docker group
     user:
