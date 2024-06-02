@@ -1,0 +1,23 @@
+---
+- name: Install Git and Clone Remote Repository
+  hosts: all
+  become: true
+  vars:
+    repo_url: https://github.com/SeemaYadav84/Springbootdeploy.git
+    repo_dest: /home/ubuntu/myrepo
+    git_branch: main
+  tasks:
+    - name: Install Git
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+
+    - name: Clone Remote Git Repository
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ repo_dest }}"
+        version: "{{ git_branch }}"
+        depth: 1
+        force: yes
+        clone: yes
