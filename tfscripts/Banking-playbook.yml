@@ -11,13 +11,13 @@
 
   - name: Install Docker
     command: sudo apt install docker.io
-	
+    
   - name: Add user to Docker group
     user:
       name: ubuntu
       append: yes
-      groups: docker	
-	
+      groups: docker
+      
   - name: Restart docker 
     command: sudo systemctl restart docker     
 
