@@ -1,19 +1,19 @@
-- name : Configure Docker on EC2-server Instance created my main.tf
-  hosts : all
+- name: Configure Docker on EC2-server Instance created my main.tf
+  hosts: all
   become: true
-  connection : ssh
-  tasks : 
+  connection: ssh
+  tasks: 
   - name: Updating 
-    command : sudo apt update
+    command: sudo apt update
 
   - name: Upgrading
-    command : sudo apt upgrade -y
+    command: sudo apt upgrade -y
 
-  - name : Install Docker
-    command : sudo apt install docker-ce -y
+  - name: Install Docker
+    command: sudo apt install docker-ce -y
 
-  - name : Start Docker Service
-    command : sudo systemctl start docker
+  - name: Start Docker Service
+    command: sudo systemctl start docker
 
-  - name : Run the Bank application
+  - name: Run the Bank application
     command: sudo docker run -dt -p 8070:8071 seemayd/banking-app:1.0
