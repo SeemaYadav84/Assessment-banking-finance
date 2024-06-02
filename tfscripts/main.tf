@@ -29,7 +29,7 @@ resource "aws_instance" "EC2-server" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${aws_instance.EC2-server.public_ip}, --private-key ${local_file.web1-key.content} Banking-playbook.yml "
+    command = "ansible-playbook -i ${aws_instance.EC2-server.public_ip}, --private-key ${local_file.web1-key.content} var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml "
   }
 }
 
