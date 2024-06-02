@@ -36,7 +36,7 @@ resource "aws_key_pair" "app-key" {
   public_key = tls_private_key.web1-key.public_key_openssh
 }
 #Private key 
-resource "local_file" "web1-key" {
+resource "local_sensitive_file" "web1-key" {
   content  = tls_private_key.web1-key.private_key_pem
   file_permission = "600"
   directory_permission = "700"
