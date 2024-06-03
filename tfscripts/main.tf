@@ -8,8 +8,18 @@ resource "aws_instance" "EC2-server" {
     Name = "EC2-server"
   }
   
-  provisioner "remote-exec" {
-    inline = [ "echo 'wait to start instance' "]
+ provisioner "remote-exec" {
+    inline = [
+      "sudo apt update -y",
+      "sudo apt install docker.io -y",
+      "sudo wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64",
+      "sudo chmod +x /home/ubuntu/minikube-linux-amd64",
+      "sudo cp minikube-linux-amd64 /usr/local/bin/minikube",
+      "curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl",
+      "sudo chmod +x /home/ubuntu/kubectl",
+      "sudo cp kubectl /usr/local/bin/kubectl",
+      "sudo usermod -aG docker ubuntu"
+    ]
 
   connection {
     type     = "ssh"
@@ -18,13 +28,6 @@ resource "aws_instance" "EC2-server" {
     host     = self.public_ip
     }
 }
-  provisioner "local-exec" {
-        command = " echo ${aws_instance.EC2-server.public_ip} > inventory "
-  }
-
-  provisioner "local-exec" {
-    command = "ansible-playbook  -i ${aws_instance.EC2-server.public_ip}, --private-key ${local_sensitive_file.web1-key.filename} /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking-playbook.yml "
-  }
 }
 
 resource "tls_private_key" "web1-key" {
