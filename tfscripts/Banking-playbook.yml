@@ -25,4 +25,4 @@
     command: sudo systemctl start docker
 
   - name: Run the Bank application
-    command: sudo docker run -dt -p 8070:8071 seemayd/banking-app:1.0
+    command: docker run -itd -p 8081:8081 seemayd/banking-app:1.0
