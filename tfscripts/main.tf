@@ -7,7 +7,12 @@ resource "aws_instance" "EC2-server" {
   tags = {
     Name = "EC2-server"
   }
-  
+
+  provisioner "file" {
+    source      = "/var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking_deploy.yml"
+    destination = "/home/ubuntu/Banking_deploy.yml"
+ }
+
  provisioner "remote-exec" {
     inline = [
       "sudo apt update -y",
@@ -31,10 +36,6 @@ resource "aws_instance" "EC2-server" {
 
   provisioner "local-exec" {
         command = " echo ${aws_instance.EC2-server.public_ip} > inventory "
-  }
-
-	provisioner "local-exec" {
-        command = "ansible-playbook  -i ${aws_instance.EC2-server.public_ip}, --private-key ${local_sensitive_file.web1-key.filename} /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking_deploy.yml "	
   }
 }
 
