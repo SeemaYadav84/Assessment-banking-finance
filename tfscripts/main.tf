@@ -27,7 +27,7 @@ resource "aws_instance" "EC2-server" {
     private_key = tls_private_key.web1-key.private_key_pem
     host     = self.public_ip
     }
-}
+
   provisioner "local-exec" {
     command = " echo ${aws_instance.EC2-server.public_ip} > inventory "
   }
