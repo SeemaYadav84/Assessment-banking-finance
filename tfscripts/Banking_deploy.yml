@@ -5,11 +5,11 @@
 
   tasks:
     - name: Apply Deployment
-      k8s:
+      kubernetes.core.k8s:
         definition: 'Banking_app_deployment.yml'
         state: present
 
     - name: Apply Service
-      k8s:
+      kubernetes.core.k8s:
         definition: 'service.yml'
         state: present
