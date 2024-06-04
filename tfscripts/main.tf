@@ -28,6 +28,10 @@ resource "aws_instance" "EC2-server" {
     host     = self.public_ip
     }
   }
+
+  provisioner "local-exec" {
+        command = " echo ${aws_instance.EC2-server.public_ip} > inventory "
+  }
 }
 
 resource "tls_private_key" "web1-key" {
