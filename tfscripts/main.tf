@@ -9,8 +9,11 @@ resource "aws_instance" "EC2-server" {
   }
 
  provisioner "file" {
-    source      = "/var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking_deploy.yml"
+    source      = "/var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking_app_deployment.yaml"
     destination = "/home/ubuntu/Banking_deploy.yml"
+
+    source      = "/var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/service.yaml"
+    destination = "/home/ubuntu/service.yml"
  }
 
 connection {
@@ -31,6 +34,9 @@ connection {
       "sudo chmod +x /home/ubuntu/kubectl",
       "sudo cp kubectl /usr/local/bin/kubectl",
       "sudo usermod -aG docker ubuntu"
+      "minikube start"
+      "sudo kubectl create -f Banking_app_deployment.yaml"
+      "sudo kubectl create -f service.yaml"
     ]
 
   connection {
