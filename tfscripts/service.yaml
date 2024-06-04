@@ -4,7 +4,7 @@ metadata:
   name: my-service
 spec:
   selector:
-    app: Bankingapp
+    app: bankingapp
   type: LoadBalancer
   ports:
     - protocol: TCP
