@@ -8,11 +8,6 @@ resource "aws_instance" "EC2-server" {
     Name = "EC2-server"
   }
 
-  provisioner "file" {
-    source      = "/var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking_deploy.yml"
-    destination = "/home/ubuntu/Banking_deploy.yml"
- }
-
  provisioner "remote-exec" {
     inline = [
       "sudo apt update -y",
@@ -25,6 +20,11 @@ resource "aws_instance" "EC2-server" {
       "sudo cp kubectl /usr/local/bin/kubectl",
       "sudo usermod -aG docker ubuntu"
     ]
+
+ provisioner "file" {
+    source      = "/var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking_deploy.yml"
+    destination = "/home/ubuntu/Banking_deploy.yml"
+ }
 
   connection {
     type     = "ssh"
