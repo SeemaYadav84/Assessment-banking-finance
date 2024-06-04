@@ -37,8 +37,8 @@ connection {
       "sudo cp kubectl /usr/local/bin/kubectl",
       "sudo usermod -aG docker ubuntu",
       "minikube start",
-      "sudo kubectl create -f Banking_app_deployment.yaml",
-      "sudo kubectl create -f service.yaml"
+      "kubectl create -f Banking_app_deployment.yaml",
+      "kubectl create -f service.yaml"
     ]
 
   connection {
