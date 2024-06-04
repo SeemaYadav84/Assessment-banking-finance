@@ -10,7 +10,7 @@ resource "aws_instance" "EC2-server" {
 
  provisioner "file" {
     source      = "/var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Banking_app_deployment.yaml"
-    destination = "/home/ubuntu/Banking_deploy.yaml"
+    destination = "/home/ubuntu/Banking_app_deployment.yaml"
 }
 
  provisioner "file" {
