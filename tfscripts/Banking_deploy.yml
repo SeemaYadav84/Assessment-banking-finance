@@ -1,6 +1,6 @@
 ---
-- name: Deploy Nginx App
-  hosts: localhost
+- name: Deploy Banking App
+  hosts: all
   gather_facts: false
 
   tasks:
