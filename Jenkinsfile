@@ -56,13 +56,5 @@ pipeline {
            }
        }	       
     }  
-    stage('Dev Deploy') {
-	steps{
-	    dir('tfscripts') {
-	    sh returnStatus: true, script: "ssh ubuntu@13.58.230.229 kubectl apply -f Banking_app_deployment.yml"
-	    sh returnStatus: true, script: "ssh ubuntu@13.58.230.229 kubectl apply -f service.yaml"
-	      }
-	    }
-    }
 }	
 }
