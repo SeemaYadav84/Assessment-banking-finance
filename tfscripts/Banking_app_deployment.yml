@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Banking-deployment
+  labels:
+    app: Bankingapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Bankingapp
+  template:
+    metadata:
+      labels:
+        app: Bankingapp
+    spec:
+      containers:
+      - name: Bankingapp
+        image: seemayd/banking-app:1.0
+        ports:
+        - containerPort: 80
