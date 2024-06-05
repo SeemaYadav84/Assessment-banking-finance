@@ -36,9 +36,8 @@ connection {
       "curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl",
       "sudo chmod +x /home/ubuntu/kubectl",
       "sudo cp kubectl /usr/local/bin/kubectl",
-      "sudo usermod -aG docker $USER && newgrp docker",
-      "minikube start",
-      "sleep 1m", 
+      "sudo usermod -aG docker ubuntu && newgrp docker",
+      "minikube start", 
       "kubectl create -f Banking_app_deployment.yaml",
       "kubectl create -f service.yaml"
     ]
