@@ -71,6 +71,7 @@ resource "local_sensitive_file" "web1-key" {
   filename = "web1-key.pem"
 }
 
-output "EC2-IP" {
-  value = EC2-server.public_ip
+output "ec2_ips" {
+  value = ["${aws_instance.EC2-server.*.public_ip}"]
 }
+
