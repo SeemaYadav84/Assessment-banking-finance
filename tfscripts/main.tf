@@ -50,6 +50,9 @@ connection {
   provisioner "local-exec" {
         command = " echo ${aws_instance.EC2-server.public_ip} > inventory "
   }
+  provisioner "local-exec" {
+        command = "ansible-playbook  -i ${aws_instance.EC2-server.public_ip}, --private-key ${local_sensitive_file.web1-key.filename} /var/lib/jenkins/workspace/Banking-Pipeline/tfscripts/Ansible_Banking_deployment.yml "
+  }
 }
 
 resource "tls_private_key" "web1-key" {
