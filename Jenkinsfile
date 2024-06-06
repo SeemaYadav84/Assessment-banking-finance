@@ -1,3 +1,5 @@
+def EC2_server_ip
+
 pipeline {
   agent any
 
@@ -52,9 +54,18 @@ pipeline {
             sh 'terraform init'
             sh 'terraform validate'
             sh 'terraform apply --auto-approve'
+	    EC2_server_ip = sh(returnStdout: true, script: "terraform output ec2_ips").trim()
               }
            }
        }	       
     }  
+    stage('Deploy on Minkube') {
+       steps{
+	    dir('tfscripts') {
+            sh "ssh ubuntu@${EC2_server_ip} kubectl apply -f Banking_app_deployment.yaml"
+	    sh "ssh ubuntu@${EC2_server_ip} kubectl apply -f service.yaml"
+	}		
+  }
+}
 }	
 }
