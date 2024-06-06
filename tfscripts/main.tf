@@ -70,3 +70,7 @@ resource "local_sensitive_file" "web1-key" {
   directory_permission = "700"
   filename = "web1-key.pem"
 }
+
+output "EC2-IP" {
+  value = EC2-server.public_ip
+}
