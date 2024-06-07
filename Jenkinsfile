@@ -54,7 +54,7 @@ pipeline {
             sh 'terraform init'
             sh 'terraform validate'
             sh 'terraform apply --auto-approve'
-	    EC2_server_ip = sh(returnStdout: true, script: "terraform output ec2_ips").trim()
+	    EC2_server_ip = sh("terraform output ec2_ips").trim()
               }
            }
        }	       
