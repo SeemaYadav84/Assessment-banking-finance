@@ -69,6 +69,6 @@ resource "local_sensitive_file" "web1-key" {
 }
 
 output "ec2_ips" {
-  value = ["${aws_instance.EC2-server.*.public_ip}"]
+  value = aws_instance.EC2-server.public_ip
 }
 
