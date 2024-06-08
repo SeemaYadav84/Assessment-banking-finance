@@ -1,3 +1,4 @@
+def string EC2_server_ip
 
 pipeline {
   agent any
@@ -53,7 +54,7 @@ pipeline {
             sh 'terraform init'
             sh 'terraform validate'
             sh 'terraform apply --auto-approve'
-	    def EC2_server_ip = sh(returnStdout: true, script: "terraform output ec2_ips")
+	    EC2_server_ip = sh(returnStdout: true, script: "terraform output ec2_ips").trim()
               }
            }
        }	       
