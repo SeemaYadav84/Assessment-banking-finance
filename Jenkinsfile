@@ -1,4 +1,4 @@
-def string EC2_server_ip
+def EC2_server_ip
 
 pipeline {
   agent any
