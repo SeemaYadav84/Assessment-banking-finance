@@ -1,8 +1,8 @@
 resource "aws_instance" "EC2-server" {
-  ami = "ami-04b70fa74e45c3917"
+  ami = "ami-09040d770ffe2224f"
   instance_type = "t2.medium"
   key_name = "web1-key"
-  vpc_security_group_ids= ["sg-04abe48ace52cdbac"]
+  vpc_security_group_ids= ["sg-09f4465cb5203e485"]
   
   tags = {
     Name = "EC2-server"
